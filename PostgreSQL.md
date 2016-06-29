@@ -2,7 +2,7 @@
 
 ## Group by day/hour
 
-```
+```sql
 SELECT DATE_TRUNC('hour', created_at), COUNT(*) FROM table GROUP BY DATE_TRUNC('hour', created_at);
 ```
 
@@ -10,7 +10,7 @@ SELECT DATE_TRUNC('hour', created_at), COUNT(*) FROM table GROUP BY DATE_TRUNC('
 
 See the type of an expression:
 
-```
+```sql
 SELECT pg_typeof(expression);
 ```
 
@@ -18,13 +18,13 @@ SELECT pg_typeof(expression);
 
 Use an expression index on the reversed email field:
 
-```
+```sql
 CREATE INDEX ix_email_reverse ON accounts (REVERSE(email);
 ```
 
 And then LIKE can use the index for a suffix search:
 
-```
+```sql
 SELECT * FROM accounts WHERE REVERSE(email) LIKE REVERSE('%@domain.cmo');
 ```
 
@@ -53,7 +53,7 @@ SELECT *, pg_size_pretty(total_bytes) AS total
 
 ## Rename a hstore key
 
-```PLpgSQL
+```sql
 CREATE OR REPLACE FUNCTION
 change_hstore_key(h hstore, from_key text, to_key text) RETURNS HSTORE AS $$
 BEGIN
