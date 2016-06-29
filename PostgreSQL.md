@@ -2,7 +2,9 @@
 
 ## Group by day/hour
 
-SELECT DATE_TRUNC('hour', created_at), COUNT(*) FROM table GROUP BY DATE_TRUNC('hour', created_at)
+```
+SELECT DATE_TRUNC('hour', created_at), COUNT(*) FROM table GROUP BY DATE_TRUNC('hour', created_at);
+```
 
 ## Types
 
@@ -28,7 +30,7 @@ SELECT * FROM accounts WHERE REVERSE(email) LIKE REVERSE('%@domain.cmo');
 
 ## Disk size of all tables
 
-```
+```sql
 SELECT *, pg_size_pretty(total_bytes) AS total
         , pg_size_pretty(index_bytes) AS index
         , pg_size_pretty(toast_bytes) AS toast
@@ -51,7 +53,7 @@ SELECT *, pg_size_pretty(total_bytes) AS total
 
 ## Rename a hstore key
 
-```
+```PLpgSQL
 CREATE OR REPLACE FUNCTION
 change_hstore_key(h hstore, from_key text, to_key text) RETURNS HSTORE AS $$
 BEGIN
