@@ -4,6 +4,6 @@
 
 Mix multiple time-ordered logs in a single ordered logstream and find stuff inside.
 
-```shell
+```Shell
 grep -h 'xxxx' *.log | sort
 ```
