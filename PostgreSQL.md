@@ -1,5 +1,16 @@
 # PostgreSQL
 
+## psql
+
+Execute a SQL command from shell:
+
+```
+psql -U <user> -W -h localhost -d <db> -c 'SELECT NOW()'
+```
+
+- `-W` to force password auth.
+- `-h localhost` to force connecting through the regular TCP interface, and use the right auth path.
+
 ## Group by day/hour
 
 ```PLpgSQL
@@ -64,3 +75,32 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 ```
+
+## Import CSV data
+
+Import local file in psql:
+
+```PLpgSQL
+COPY prod.log_measures (created_at, measure, value) FROM PROGRAM 'cat /home/gog/logs-0.27/measures*' DELIMITER ',' CSV;
+```
+
+## Pivot tables
+
+*Require the `tablefunc` extension.*
+
+```PLpgSQL
+SELECT * FROM crosstab
+(
+  'SELECT created_at, measure, value FROM log_measures WHERE measure IN (''A'', ''B'', ''C'') ORDER BY 1,2'
+)
+AS
+(
+  d timestamptz,
+  a float8,
+  b float8,
+  c float8
+)
+```
+
+- The query to pivot need to be sent as raw text, not as subquery!
+- Returned fields are sorted alphabetically with this method (assuming there are values for all pivots, else we need the 2-param form of `crosstab()`).
