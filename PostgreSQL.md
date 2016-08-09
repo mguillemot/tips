@@ -81,7 +81,19 @@ $$ LANGUAGE plpgsql;
 Import local file in psql:
 
 ```PLpgSQL
-COPY prod.log_measures (created_at, measure, value) FROM PROGRAM 'cat /home/gog/logs-0.27/measures*' DELIMITER ',' CSV;
+\copy dest_table (a, b, c) FROM 'source.csv' DELIMITER ',' CSV;
+```
+
+Import file on the server:
+
+```PLpgSQL
+COPY dest_table (a, b, c) FROM 'source.csv' DELIMITER ',' CSV;
+```
+
+Concatenate/filter input files:
+
+```PLpgSQL
+COPY dest_table (a, b, c) FROM PROGRAM 'echo *.csv | grep something' DELIMITER ',' CSV;
 ```
 
 ## Pivot tables
@@ -103,4 +115,4 @@ AS
 ```
 
 - The query to pivot need to be sent as raw text, not as subquery!
-- Returned fields are sorted alphabetically with this method (assuming there are values for all pivots, else we need the 2-param form of `crosstab()`).
+- Returned fields are sorted alphabetically with this method, assuming there are values for all pivots. If that's not the case, we need the 2-param form of `crosstab()`.
