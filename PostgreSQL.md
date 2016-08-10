@@ -11,6 +11,14 @@ psql -U <user> -W -h localhost -d <db> -c 'SELECT NOW()'
 - `-W` to force password auth.
 - `-h localhost` to force connecting through the regular TCP interface, and use the right auth path.
 
+## Backup schema with its content into another schema
+
+```
+pg_dump -n <schema> > schema.sql
+vi schema.sql # edit occurences of schema in the header
+psql -f schema.sql
+```
+
 ## Group by day/hour
 
 ```PLpgSQL
