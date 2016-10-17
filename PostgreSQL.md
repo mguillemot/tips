@@ -104,6 +104,12 @@ Concatenate/filter input files:
 COPY dest_table (a, b, c) FROM PROGRAM 'echo *.csv | grep something' DELIMITER ',' CSV;
 ```
 
+## Aggregate filters
+
+```PLpgSQL
+SELECT SUM(value) FILTER (WHERE type = 'A') AS total_a, SUM(value) FILTER (WHERE type = 'B') AS total_bFROM data
+```
+
 ## Pivot tables
 
 *Require the `tablefunc` extension.*
